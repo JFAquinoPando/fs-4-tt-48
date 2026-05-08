@@ -1,0 +1,1 @@
+const swiperJs = new Swiper(".carrusel", {})
