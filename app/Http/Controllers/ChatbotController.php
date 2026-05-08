@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Gemini\Laravel\Facades\Gemini;
-use Illuminate\Log\Logger;
+use App\Services\GeminiService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class ChatbotController extends Controller
 {
+    protected $gemini;
+
+    public function __construct(GeminiService $gemini)
+    {
+        $this->gemini = $gemini;
+    }
+
     public function chat(Request $request)
     {
         $request->validate([
@@ -39,13 +45,13 @@ class ChatbotController extends Controller
             $productsContext
             Si no hay productos en la lista anterior, menciona que tenemos PC Gamers, artículos de hogar, decoración y regalos para mamá.
             Si no sabes algo, dile que se comunique con atención al cliente.";
-            
-            $model = config('gemini.model', 'gemini-1.5-flash');
-            $result = Gemini::generativeModel($model)->generateContent($systemPrompt . "\n\nUsuario: " . $userMessage);
-            
-            Log::info($result->text());
+
+            $response = $this->gemini->generateContent($userMessage, $systemPrompt);
+
+            Log::info($response);
+
             return response()->json([
-                'response' => $result->text(),
+                'response' => $response,
             ]);
         } catch (\Exception $e) {
             return response()->json([
