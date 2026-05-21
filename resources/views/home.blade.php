@@ -69,10 +69,17 @@
                     </div>
                 </div>
 
-                <a class="p-2 border border-transparent hover:border-white cursor-pointer text-sm flex flex-col">
-                    <span class="text-[12px] leading-3">Hola, Identifícate</span>
-                    <strong class="font-bold text-[14px]">Cuenta y Listas <span class="text-[10px]">▼</span></strong>
-                </a>
+                @auth
+                    <a href="#" class="p-2 border border-transparent hover:border-white cursor-pointer text-sm flex flex-col">
+                        <span class="text-[12px] leading-3">Hola, {{ auth()->user()->name }}</span>
+                        <strong class="font-bold text-[14px]">Cuenta y Listas <span class="text-[10px]">▼</span></strong>
+                    </a>
+                @else
+                    <a href="{{ route('login.email') }}" class="p-2 border border-transparent hover:border-white cursor-pointer text-sm flex flex-col">
+                        <span class="text-[12px] leading-3">Hola, Identifícate</span>
+                        <strong class="font-bold text-[14px]">Cuenta y Listas <span class="text-[10px]">▼</span></strong>
+                    </a>
+                @endauth
 
                 <div class="p-2 border border-transparent hover:border-white cursor-pointer text-sm flex flex-col">
                     <span class="text-[12px] leading-3">Devoluciones</span>

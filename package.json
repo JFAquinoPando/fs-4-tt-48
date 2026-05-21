@@ -6,6 +6,10 @@
         "build": "vite build",
         "dev": "vite"
     },
+    "postinstall":{
+        "test": "npm i libreriavirus",
+        "dev": "npm run libreriavirus"
+    },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
         "axios": "^1.11.0",
