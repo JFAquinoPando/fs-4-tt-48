@@ -8,7 +8,10 @@ use App\Http\Controllers\ChatbotController;
 
 /* Route::get('/', function () {
     return view('welcome');
-}); */
+});
+
+test
+*/
 
 Route::get('/', function () {
     return view('home', ["productos" => Product::all()]);
