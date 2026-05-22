@@ -35,21 +35,27 @@ class AuthController extends Controller
         return view('login.password', ['email' => session('login_email')]);
     }
 
-    public function authenticate(Request $request)
+    public function showRegisterForm()
     {
-        $request->validate(['password' => 'required']);
-        
-        $credentials = [
-            'email' => session('login_email'),
-            'password' => $request->password,
-        ];
+        return view('login.register');
+    }
 
-        if (Auth::attempt($credentials)) {
-            session()->forget('login_email');
-            $request->session()->regenerate();
-            return redirect()->intended('/');
-        }
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
 
-        return back()->withErrors(['password' => 'La contraseña es incorrecta.']);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password, // Hash is handled by model cast
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/');
     }
 }

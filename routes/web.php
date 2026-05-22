@@ -33,3 +33,6 @@ Route::get('/login', [AuthController::class, 'showEmailForm'])->name('login.emai
 Route::post('/login', [AuthController::class, 'verifyEmail']);
 Route::get('/login/password', [AuthController::class, 'showPasswordForm'])->name('login.password');
 Route::post('/login/password', [AuthController::class, 'authenticate']);
+
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);

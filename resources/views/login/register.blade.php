@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar sesión - Amazon Clone</title>
+    <title>Crear cuenta - Amazon Clone</title>
     <style>
         body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; background: #f0f2f2; }
         .box { background: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px; width: 350px; }
@@ -14,17 +14,23 @@
 </head>
 <body>
     <div class="box">
-        <h1>Iniciar sesión</h1>
-        <form method="POST" action="/login">
+        <h1>Crear cuenta</h1>
+        <form method="POST" action="{{ route('register') }}">
             @csrf
+            <label>Tu nombre</label>
+            <input type="text" name="name" required autofocus>
+            @error('name') <div class="error">{{ $message }}</div> @enderror
+            
             <label>Correo electrónico</label>
             <input type="email" name="email" required>
             @error('email') <div class="error">{{ $message }}</div> @enderror
-            <button type="submit">Continuar</button>
+            
+            <label>Contraseña</label>
+            <input type="password" name="password" required>
+            @error('password') <div class="error">{{ $message }}</div> @enderror
+            
+            <button type="submit">Crear cuenta de Amazon</button>
         </form>
-        <div style="margin-top: 15px; text-align: center;">
-            <a href="{{ route('register') }}" style="color: #007185; text-decoration: none;">Crear tu cuenta de Amazon</a>
-        </div>
     </div>
 </body>
 </html>
